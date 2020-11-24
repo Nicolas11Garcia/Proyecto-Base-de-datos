@@ -34,11 +34,9 @@ CREATE TABLE factura (
     id INT AUTO_INCREMENT,
     cliente_id_fk INT,
     fecha DATETIME,
-    trabajador_id_fk INT,
 
     PRIMARY KEY (id),
-    FOREIGN KEY (cliente_id_fk) REFERENCES cliente(id),
-    FOREIGN KEY (trabajador_id_fk) REFERENCES trabajador(id)
+    FOREIGN KEY (cliente_id_fk) REFERENCES cliente(id)
 );
   
 
@@ -56,7 +54,7 @@ CREATE TABLE detalle(
 
 -- Procedimientos Almacenados
 
--- 1 Agregar producto
+-- 1 Ingresar producto
 DELIMITER //
 CREATE PROCEDURE ingresar_producto(IN _nombre VARCHAR(100), _precio INT)
 BEGIN
@@ -79,7 +77,7 @@ DELIMITER ;
 CALL ingresar_producto("Sandias",500);
 
 
--- 2 BORRAR PRODUCTO
+-- 2 Eliminar PRODUCTO
 DELIMITER //
 CREATE PROCEDURE borrar_producto(IN _id INT)
 BEGIN
@@ -100,5 +98,56 @@ DELIMITER ;
 
 CALL borrar_producto(3);
 
+
+-- 3 Cambiar contraseña
+DELIMITER //
+CREATE PROCEDURE cambiar_pass(IN _user VARCHAR(50),_pass VARCHAR(200),passnew VARCHAR(200))
+BEGIN
+    DECLARE verificador_ INT;
+    DECLARE verificador2_ INT;
+
+    SET verificador_ = (SELECT COUNT(*) 
+    FROM trabajador
+    WHERE username = _user);
+
+    SET verificador2_ = (SELECT COUNT(*) 
+    FROM trabajador
+    WHERE contraseña = SHA2(_pass,0));
+
+    IF verificador_ = 1 AND verificador2_ = 1 THEN 
+        UPDATE trabajador SET contraseña = SHA2(passnew,0) WHERE username = _user;
+        SELECT 'Su contraseña a sido cambiada' AS 'Alerta';
+    ELSE
+        SELECT 'El usuario o la contraseña son incorrectos' AS 'Alerta';
+    END IF;
+END //
+DELIMITER ;
+
+CALL cambiar_pass('nico','hola','holamundo');
+
+
+-- 4 Cambiar nombre de usuario
+DELIMITER //
+CREATE PROCEDURE cambiar_user(IN _user VARCHAR(50),_pass VARCHAR(200),usernew VARCHAR(200))
+BEGIN
+    DECLARE verificador_ INT;
+    DECLARE verificador2_ INT;
+
+    SET verificador_ = (SELECT COUNT(*) 
+    FROM trabajador
+    WHERE username = _user);
+
+    SET verificador2_ = (SELECT COUNT(*) 
+    FROM trabajador
+    WHERE contraseña = SHA2(_pass,0));
+
+    IF verificador_ = 1 AND verificador2_ = 1 THEN 
+        UPDATE trabajador SET username = usernew WHERE username = _user;
+        SELECT 'Su usuario a sido cambiado' AS 'Alerta';
+    ELSE
+        SELECT 'El usuario o la contraseña son incorrectos' AS 'Alerta';
+    END IF;
+END //
+DELIMITER ;
 
 
