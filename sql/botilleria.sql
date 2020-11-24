@@ -150,4 +150,9 @@ BEGIN
 END //
 DELIMITER ;
 
+<<<<<<< HEAD
+=======
+call cambiar_user('carlos','perrito','carlitos perrito');
+
+>>>>>>> aad2b7341e56ff6d6d2f0ce6bb40cd65992b826b
 
