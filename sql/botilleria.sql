@@ -6,7 +6,7 @@ USE botilleria;
 
 CREATE TABLE trabajador (
     id INT AUTO_INCREMENT,
-    nombre VARCHAR(50),
+    username VARCHAR(50),
     contraseña VARCHAR(200),
 
     PRIMARY KEY (id)
@@ -54,38 +54,51 @@ CREATE TABLE detalle(
     FOREIGN KEY (producto_id_fk) REFERENCES producto(id)
 );
 
+-- Procedimientos Almacenados
+
+-- 1 Agregar producto
+DELIMITER //
+CREATE PROCEDURE ingresar_producto(IN _nombre VARCHAR(100), _precio INT)
+BEGIN
+
+    DECLARE verificador INT ;
+
+    SET verificador = (SELECT COUNT(*) 
+    FROM producto 
+    WHERE nombre = _nombre);
+
+    IF verificador = 0 THEN 
+        INSERT INTO producto VALUES (NULL,_nombre,_precio);
+        SELECT 'Producto Agregado con exito' AS 'Alerta';
+    ELSE
+        SELECT 'No puede agregar productos repetidos' AS "Alerta";
+    END IF;
+END //
+DELIMITER ; 
+
+CALL ingresar_producto("Sandias",500);
 
 
-INSERT INTO trabajador VALUES(NULL,'nico', SHA2('hola',0));
-INSERT INTO trabajador VALUES(NULL,'carlos', SHA2('perrito',0));
+-- 2 BORRAR PRODUCTO
+DELIMITER //
+CREATE PROCEDURE borrar_producto(IN _id INT)
+BEGIN
+    DECLARE verificador_ INT;
+
+    SET verificador_ = (SELECT COUNT(*) 
+    FROM producto 
+    WHERE id = _id);
+
+    IF verificador_ = 1 THEN 
+        DELETE FROM producto WHERE id = _id;
+        SELECT 'Producto Eliminado Con Exito' AS 'Alerta';
+    ELSE
+        SELECT 'Producto No encontrado' AS "Alerta";
+    END IF;
+END //
+DELIMITER ;
+
+CALL borrar_producto(3);
 
 
 
-INSERT INTO cliente VALUES(NULL,'20213','maikol');
-
-INSERT INTO producto VALUES (NULL,'Coca-cola',1000), -- 1
-                            (NULL,'Queso 3/8 kg',800), -- 2
-                            (NULL,'Katana Fulltang T-10 BattleReady',800), -- 3
-                            (NULL,'Sprite',500); -- 4
-
-INSERT INTO factura VALUES (NULL,1,NOW(),1); -- 1    
-INSERT INTO factura VALUES (NULL,1,NOW(),2); -- 1     
-
-
-
-INSERT INTO detalle VALUES (NULL,     1,      1,        5,          (SELECT precio FROM producto WHERE id = 1) * 5); -- COLA COLA -> X5
-INSERT INTO detalle VALUES (NULL,     1,      2,        1,          (SELECT precio FROM producto WHERE id = 2) * 1);
-
-INSERT INTO detalle VALUES (NULL,     2,      1,        4,          (SELECT precio FROM producto WHERE id = 1) * 4); -- COLA COLA -> X5
-INSERT INTO detalle VALUES (NULL,     2,      2,        4,          (SELECT precio FROM producto WHERE id = 2) * 4);
-
-SELECT trabajador.nombre, SUM(detalle.precio)
-FROM detalle
-INNER JOIN trabajador ON trabajador.id = factura.factura_id_fk;
-
-SELECT trabajador.nombre, SUM(detalle.precio)
-FROM producto
-INNER JOIN detalle ON producto.id = detalle.producto_id_fk
-INNER JOIN factura ON factura.id = detalle.factura_id_fk
-INNER JOIN trabajador ON trabajador.id = factura.trabajador_id_fk
-GROUP BY trabajador.nombre;
