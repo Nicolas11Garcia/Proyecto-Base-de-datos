@@ -14,7 +14,7 @@ Debido a esto nos piden los siguientes requisitos:
 
 ## Imagen
 
-
+![alt text]( https://github.com/Nicolas11Garcia/Proyecto-Base-de-datos/blob/main/sql/Modelo%20E-R.jpg)
 
 ## Integrantes
 * Nicolas Garcia
