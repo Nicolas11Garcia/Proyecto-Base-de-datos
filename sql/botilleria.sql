@@ -26,6 +26,7 @@ CREATE TABLE producto(
     id INT AUTO_INCREMENT,
     nombre VARCHAR(100),
     precio INT,
+    activo BIT(1),
 
     PRIMARY KEY(id)
 ); 
@@ -52,6 +53,19 @@ CREATE TABLE detalle(
     FOREIGN KEY (producto_id_fk) REFERENCES producto(id)
 );
 
+CREATE TABLE productos_inactivos(
+    id INT AUTO_INCREMENT,
+    id_antiguo INT,
+    nombre VARCHAR(100),
+    precio INT,
+    fecha_desactivacion DATETIME,
+
+    PRIMARY KEY(id)
+);
+
+
+
+
 -- Procedimientos Almacenados
 
 -- 1 Ingresar producto
@@ -74,12 +88,12 @@ BEGIN
 END //
 DELIMITER ; 
 
-CALL ingresar_producto("Sandias",500);
 
 
--- 2 Eliminar PRODUCTO
+
+-- 2 Desactivar PRODUCTO
 DELIMITER //
-CREATE PROCEDURE borrar_producto(IN _id INT)
+CREATE PROCEDURE desactivar_producto(IN _id INT)
 BEGIN
     DECLARE verificador_ INT;
 
@@ -88,18 +102,38 @@ BEGIN
     WHERE id = _id);
 
     IF verificador_ = 1 THEN 
-        DELETE FROM producto WHERE id = _id;
-        SELECT 'Producto Eliminado Con Exito' AS 'Alerta';
+        UPDATE producto SET activo = 0 WHERE id = _id;
+        SELECT 'Producto Desactivado' AS 'Alerta';
     ELSE
         SELECT 'Producto No encontrado' AS "Alerta";
     END IF;
 END //
 DELIMITER ;
 
-CALL borrar_producto(3);
 
 
--- 3 Cambiar contraseña
+
+-- 3 Activar PRODUCTO
+DELIMITER //
+CREATE PROCEDURE activar_producto(IN _id INT)
+BEGIN
+    DECLARE verificador_ INT;
+
+    SET verificador_ = (SELECT COUNT(*) 
+    FROM producto 
+    WHERE id = _id);
+
+    IF verificador_ = 1 THEN 
+        UPDATE producto SET activo = 1 WHERE id = _id;
+        SELECT 'Producto Activado' AS 'Alerta';
+    ELSE
+        SELECT 'Producto No encontrado' AS "Alerta";
+    END IF;
+END //
+DELIMITER ;
+
+
+-- 4 Cambiar contraseña
 DELIMITER //
 CREATE PROCEDURE cambiar_pass(IN _user VARCHAR(50),_pass VARCHAR(200),passnew VARCHAR(200))
 BEGIN
@@ -123,10 +157,9 @@ BEGIN
 END //
 DELIMITER ;
 
-CALL cambiar_pass('nico','hola','holamundo');
 
 
--- 4 Cambiar nombre de usuario
+-- 5 Cambiar nombre de usuario
 DELIMITER //
 CREATE PROCEDURE cambiar_user(IN _user VARCHAR(50),_pass VARCHAR(200),usernew VARCHAR(200))
 BEGIN
@@ -150,9 +183,42 @@ BEGIN
 END //
 DELIMITER ;
 
-<<<<<<< HEAD
-=======
-call cambiar_user('carlos','perrito','carlitos perrito');
+-- Funcion
+DELIMITER //
+CREATE FUNCTION ver_producto(_id INT) RETURNS VARCHAR(100)
+BEGIN
+    RETURN (SELECT nombre FROM producto WHERE id = _id);
+END //
+DELIMITER ;
+SELECT ver_producto(1); 
 
->>>>>>> aad2b7341e56ff6d6d2f0ce6bb40cd65992b826b
+-- Triggers
+-- 1) Cuando se desactive un producto que se guarde en la tabla
+DELIMITER //
+CREATE TRIGGER desactivar_producto BEFORE UPDATE ON producto
+    FOR EACH ROW
+BEGIN
+    IF NEW.activo = 0 THEN
+	INSERT INTO productos_inactivos VALUES(NULL,OLD.id,OLD.nombre,OLD.precio,NOW());
+    END IF;
+END //
+DELIMITER ;
 
+-- 2) Cuando se active un producto que se guarde en la tabla
+DELIMITER //
+CREATE TRIGGER activos_productos BEFORE UPDATE ON producto
+    FOR EACH ROW
+BEGIN
+    IF NEW.activo = 1 THEN
+    DELETE from productos_inactivos WHERE id_antiguo = OLD.id;
+    END IF;
+END //
+DELIMITER ;
+
+
+
+-- Para llamar a los procedimientos
+CALL ingresar_producto("Sandias",500);
+CALL desactivar_producto(3);
+CALL activar_producto(3);
+CALL cambiar_pass('nico','hola','holamundo');
