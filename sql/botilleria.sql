@@ -55,12 +55,13 @@ CREATE TABLE detalle(
 
 CREATE TABLE productos_inactivos(
     id INT AUTO_INCREMENT,
-    id_antiguo INT,
+    id_antiguo_fk INT,
     nombre VARCHAR(100),
     precio INT,
     fecha_desactivacion DATETIME,
 
-    PRIMARY KEY(id)
+    PRIMARY KEY(id),
+    FOREIGN KEY (id_antiguo_fk) REFERENCES producto(id)
 );
 
 
@@ -210,7 +211,7 @@ CREATE TRIGGER activos_productos BEFORE UPDATE ON producto
     FOR EACH ROW
 BEGIN
     IF NEW.activo = 1 THEN
-    DELETE from productos_inactivos WHERE id_antiguo = OLD.id;
+    DELETE from productos_inactivos WHERE id_antiguo_fk = OLD.id;
     END IF;
 END //
 DELIMITER ;
