@@ -9,7 +9,8 @@ CREATE TABLE trabajador (
     username VARCHAR(50),
     contraseña VARCHAR(200),
 
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    UNIQUE (username)
 );
 
 CREATE TABLE cliente (
@@ -26,7 +27,7 @@ CREATE TABLE producto(
     id INT AUTO_INCREMENT,
     nombre VARCHAR(100),
     precio INT,
-    activo BIT(1),
+    activo BIT,
 
     PRIMARY KEY(id)
 ); 
@@ -81,7 +82,7 @@ BEGIN
     WHERE nombre = _nombre);
 
     IF verificador = 0 THEN 
-        INSERT INTO producto VALUES (NULL,_nombre,_precio);
+        INSERT INTO producto VALUES (NULL,_nombre,_precio,1);
         SELECT 'Producto Agregado con exito' AS 'Alerta';
     ELSE
         SELECT 'No puede agregar productos repetidos' AS "Alerta";
@@ -219,7 +220,7 @@ DELIMITER ;
 
 
 -- Para llamar a los procedimientos
-CALL ingresar_producto("Sandias",500);
+CALL ingresar_producto("hello",500);
 CALL desactivar_producto(3);
 CALL activar_producto(3);
 CALL cambiar_pass('nico','hola','holamundo');

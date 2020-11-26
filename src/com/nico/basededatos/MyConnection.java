@@ -20,7 +20,7 @@ public class MyConnection {
     }
 
     public Connection getCon(){
-        return  con;
+        return con;
 
     }
 }
