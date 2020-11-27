@@ -16,7 +16,7 @@ public class ActivarProducto extends JFrame {
 
 
     public ActivarProducto() throws SQLException {
-        super("Activar Producto");
+        super("Activar  Producto");
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(600,400);
