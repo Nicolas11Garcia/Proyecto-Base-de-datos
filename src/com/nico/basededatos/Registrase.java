@@ -52,14 +52,26 @@ public class Registrase extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 String nuevousuario = usuarioNew.getText();
                 String nuevaPass = passNew.getText();
+                int usuarioEncontrado = 0;
+                List<Trabajador> lista = registrarse.verUsuarios();
+
+                for(Trabajador t : lista){
+                    if(t.getUsuario().equals(nuevousuario)){
+                        usuarioEncontrado = usuarioEncontrado + 1;
+                        JOptionPane.showMessageDialog(null,"El usuario que desea ingresar ya existe, porfavor ingrese otro nuevamente");
+                        break;
+                    }
+                }
+                if(usuarioEncontrado == 0){
                     if(usuarioNew.getText().equals("") || passNew.getText().equals("")){
                         JOptionPane.showMessageDialog(panelRegistrarse,"Porfavor ingrese un usuario o contraseña validos");}
                     else{
                         Trabajador trabajador = new Trabajador(nuevousuario,nuevaPass);
                         registrarse.AgregarUser(trabajador);
                         JOptionPane.showMessageDialog(panelRegistrarse,"Usuario Ingresado");}
+                }
+                }
 
-            }
         });
 
 

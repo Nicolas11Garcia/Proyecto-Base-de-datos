@@ -32,8 +32,7 @@ public class Dao {
             Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
         } catch (SQLException throwables) {
-            JOptionPane.showMessageDialog(null,"El usuario que desea ingresar ya existe, porfavor ingrese otro nuevamente");
-        }
+            throwables.printStackTrace();        }
     }
 
     public List<Trabajador> verUsuarios(){
