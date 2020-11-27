@@ -11,6 +11,7 @@ import java.sql.SQLException;
 public class MenuPrincipal extends JFrame{
     private JPanel panelMenu;
     private JButton cerrarSesiónButton;
+    private JButton ingresarProductoButton;
     private JButton buscarProductoButton;
     private JButton desactivarProductoButton;
     private JButton activarProductoButton;
@@ -20,7 +21,7 @@ public class MenuPrincipal extends JFrame{
     private JButton cambiarUsernameButton;
     private JButton verLoVendidoEnButton;
     private JButton verTodosLosUsuariosButton;
-    private JButton ingresarProductoButton;
+
 
 
     public MenuPrincipal() throws SQLException {
