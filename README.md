@@ -5,13 +5,14 @@ Debido a esto nos piden los siguientes requisitos:
 *  Ingresar productos
 *  Buscar Producto
 *  Desactivar producto
-*  Ver productos desactivados
+*  Ver productos inactivos
 *  Activar Productos
-*  Modificar precio
 *  Ver productos activos
 *  Cambiar Contraseña
 *  Cambiar nombre de usuario
 *  Ver lo vendido en el mes
+*  Ver todos los usuarios de la botilleria
+*  Registrarse
 *  Un inicio de sesion para los trabajadores
 
 ## Imagen
