@@ -3,16 +3,6 @@ package com.nico.basededatos.dao;
 import com.nico.basededatos.MyConnection;
 import com.nico.basededatos.Trabajador;
 
-import javax.swing.*;
-import javax.swing.plaf.nimbus.State;
-import java.net.ConnectException;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
-
-
-import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +47,7 @@ public class Dao {
         }
         return lista;
     }
+    
 
 
 
