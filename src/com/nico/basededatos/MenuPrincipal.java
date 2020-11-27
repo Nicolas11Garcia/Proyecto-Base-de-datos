@@ -5,10 +5,17 @@ import java.sql.SQLException;
 
 public class MenuPrincipal extends JFrame{
     private JPanel panelMenu;
-    private JRadioButton radioButton1;
-
-
-
+    private JButton cerrarSesiónButton;
+    private JButton ingresarProductoButton;
+    private JButton buscarProductoButton;
+    private JButton desactivarProductoButton;
+    private JButton activarProductoButton;
+    private JButton verProductosInactivosButton;
+    private JButton verProductosActivosButton;
+    private JButton cambiarContraseñaButton;
+    private JButton cambiarUsernameButton;
+    private JButton verLoVendidoEnButton;
+    private JButton verTodosLosUsuariosButton;
 
 
     public MenuPrincipal() throws SQLException {
