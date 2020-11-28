@@ -140,17 +140,12 @@ DELIMITER //
 CREATE PROCEDURE cambiar_pass(IN _user VARCHAR(50),_pass VARCHAR(200),passnew VARCHAR(200))
 BEGIN
     DECLARE verificador_ INT;
-    DECLARE verificador2_ INT;
 
     SET verificador_ = (SELECT COUNT(*) 
-    FROM trabajador
-    WHERE username = _user);
+    FROM trabajador 
+    WHERE username = _user AND contraseña = SHA2(_pass,0));
 
-    SET verificador2_ = (SELECT COUNT(*) 
-    FROM trabajador
-    WHERE contraseña = SHA2(_pass,0));
-
-    IF verificador_ = 1 AND verificador2_ = 1 THEN 
+    IF verificador_ = 1 THEN 
         UPDATE trabajador SET contraseña = SHA2(passnew,0) WHERE username = _user;
         SELECT 'Su contraseña a sido cambiada' AS 'Alerta';
     ELSE
@@ -166,17 +161,12 @@ DELIMITER //
 CREATE PROCEDURE cambiar_user(IN _user VARCHAR(50),_pass VARCHAR(200),usernew VARCHAR(200))
 BEGIN
     DECLARE verificador_ INT;
-    DECLARE verificador2_ INT;
 
     SET verificador_ = (SELECT COUNT(*) 
-    FROM trabajador
-    WHERE username = _user);
+    FROM trabajador 
+    WHERE username = _user AND contraseña = SHA2(_pass,0));
 
-    SET verificador2_ = (SELECT COUNT(*) 
-    FROM trabajador
-    WHERE contraseña = SHA2(_pass,0));
-
-    IF verificador_ = 1 AND verificador2_ = 1 THEN 
+    IF verificador_ = 1 THEN 
         UPDATE trabajador SET username = usernew WHERE username = _user;
         SELECT 'Su usuario a sido cambiado' AS 'Alerta';
     ELSE

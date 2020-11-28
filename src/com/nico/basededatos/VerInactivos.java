@@ -2,22 +2,26 @@ package com.nico.basededatos;
 
 import com.nico.basededatos.MenuPrincipal;
 import com.nico.basededatos.MyConnection;
+import com.nico.basededatos.dao.Dao;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.List;
 
 public class VerInactivos extends JFrame{
     private JButton atrasButton;
     private JTable table1;
     private JPanel ProductosInactivo;
+    private DefaultTableModel modeloTabla;
 
     public VerInactivos() throws SQLException {
         super("Menu");
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(600,400);
+        setSize(700,400);
         setLocationRelativeTo(null);
         add(ProductosInactivo);
 
@@ -28,6 +32,37 @@ public class VerInactivos extends JFrame{
         String user = "root";
         String pass = "123";
         MyConnection link = new MyConnection(ip,user,pass,db);
+
+        Dao dao = new Dao(link);
+        //Crear tabla
+        modeloTabla = new DefaultTableModel();
+        modeloTabla = new DefaultTableModel();
+        modeloTabla.addColumn("ID");
+        modeloTabla.addColumn("ID Producto");
+        modeloTabla.addColumn("Producto");
+        modeloTabla.addColumn("Precio");
+        modeloTabla.addColumn("Fecha de Desactivación");
+
+        table1.setModel(modeloTabla);
+        List<Inactivos> lista2= dao.verInactivos();
+        for(Inactivos p : lista2) {
+            String[] s = new String[lista2.size() + 4];
+            String id = String.valueOf(p.getID());
+            String id_produc = String.valueOf(p.getID_Producto());
+            String precio = String.valueOf(p.getPrecio());
+
+
+            s[0] = id;
+            s[1] = id_produc;
+            s[2] = p.getProducto();
+            s[3] = precio;
+            s[4] = p.getDesactivado();
+
+            modeloTabla.addRow(s);
+        }
+
+
+
 
         atrasButton.addActionListener(new ActionListener() {
             @Override
@@ -40,6 +75,9 @@ public class VerInactivos extends JFrame{
                 }
             }
         });
+
+
+
 
     }
 }

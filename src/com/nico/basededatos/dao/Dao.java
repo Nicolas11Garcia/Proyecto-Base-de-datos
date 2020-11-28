@@ -195,6 +195,58 @@ public class Dao {
         return lista;
     }
 
+    public void CambiarUser(CambiarUsuarioAtributo cambiarUser){
+        String sql = "CALL cambiar_user('"+cambiarUser.getUsuario()+"','"+cambiarUser.getContraseña()+"','"+cambiarUser.getNuevoUsuario()+"')";
+        Connection con = myLink.getCon();
+        Statement statement = null;
+        try {
+            statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public List<Inactivos> verInactivos(){
+        String sql = "SELECT * FROM productos_inactivos";
+        List<Inactivos> listado = new ArrayList();
+        Connection con = myLink.getCon();
+        Statement statement = null;
+        try {
+            statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            while(resultSet.next()){
+                int id = resultSet.getInt(1);
+                int id_producto = resultSet.getInt(2);
+                String producto = resultSet.getString(3);
+                int precio  = resultSet.getInt(4);
+                String desactivado  = resultSet.getString(5);
+
+                Inactivos inact = new Inactivos(id,id_producto,producto,precio,desactivado);
+                listado.add(inact);
+            }
+            return listado;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return listado;
+    }
+
+    public void CambiarContrasena(Contrasena nuevaContrasena) {
+        String sql = "CALL cambiar_pass('"+nuevaContrasena.getUser()+"','"+nuevaContrasena.getPass()+"','"+nuevaContrasena.getNewPass()+"')";
+        Connection con = myLink.getCon();
+
+        try {
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+
 
 
 

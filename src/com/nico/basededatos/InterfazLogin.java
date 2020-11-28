@@ -64,18 +64,15 @@ public class InterfazLogin extends JFrame{
                 String sql = "SELECT * FROM trabajador WHERE username = '"+usuario+"' AND contraseña = SHA2('"+pass+"',0)";
 
                 try {
-
                     Connection con = link.getCon();
                     Statement statement = con.createStatement();
                     ResultSet resultSet = statement.executeQuery(sql);
                     if (resultSet.next()){
                         usuarioEncontrado = usuarioEncontrado + 1;
-
                         if(usuarioEncontrado == 1){
                             setVisible(false);
                             MenuPrincipal menu = new MenuPrincipal();
                         }
-
                     }else{
                         JOptionPane.showMessageDialog(panelLogin,"El usuario o la contraseña son invalidos, porfavor intente nuevamente");
                     }
