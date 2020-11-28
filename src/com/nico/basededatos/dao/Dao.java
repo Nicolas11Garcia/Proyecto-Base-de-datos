@@ -2,6 +2,7 @@ package com.nico.basededatos.dao;
 
 import com.nico.basededatos.MyConnection;
 import com.nico.basededatos.Trabajador;
+import com.nico.basededatos.TrabajadorConID;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -39,6 +40,29 @@ public class Dao {
                 String pass = resultSet.getString(3);
 
                 Trabajador trabajador = new Trabajador(nombres,pass);
+                lista.add(trabajador);
+            }
+            return  lista;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return lista;
+    }
+
+    public List<TrabajadorConID> mostrarUsuariosID(){
+        String sql = "SELECT * FROM trabajador";
+        List<TrabajadorConID> lista = new ArrayList();
+        Connection con = myLink.getCon();
+        Statement statement = null;
+        try {
+            statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            while(resultSet.next()){
+                int id = resultSet.getInt(1);
+                String nombre = resultSet.getString(2);
+
+                TrabajadorConID trabajador = new TrabajadorConID(id,nombre);
                 lista.add(trabajador);
             }
             return  lista;
