@@ -192,7 +192,7 @@ BEGIN
     RETURN (SELECT nombre FROM producto WHERE id = _id);
 END //
 DELIMITER ;
-SELECT ver_producto(1); 
+
 
 -- Triggers
 -- 1) Cuando se desactive un producto que se guarde en la tabla
@@ -224,3 +224,4 @@ CALL ingresar_producto("hello",500);
 CALL desactivar_producto(3);
 CALL activar_producto(3);
 CALL cambiar_pass('nico','hola','holamundo');
+SELECT ver_producto(1); 

@@ -57,9 +57,12 @@ public class IngresarProducto extends  JFrame{
                 String nombreProducto = textoNombre.getText();
                 String precioProducto = textoPrecio.getText();
 
+                //Convertir en int y restringir acceso a solo numeros
                 JFormattedTextField textField = new JFormattedTextField(new Integer(precioProducto));
                 Integer valor = (Integer) textField.getValue();
+
                 int productoEncontrado = 0;
+
                 List<Producto> lista = dao.verProductos();
 
                 for(Producto p : lista){
