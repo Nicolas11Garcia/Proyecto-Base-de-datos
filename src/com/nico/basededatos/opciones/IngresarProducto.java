@@ -53,9 +53,12 @@ public class IngresarProducto extends  JFrame{
         ingresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
                 String nombreProducto = textoNombre.getText();
                 String precioProducto = textoPrecio.getText();
 
+                JFormattedTextField textField = new JFormattedTextField(new Integer(precioProducto));
+                Integer valor = (Integer) textField.getValue();
                 int productoEncontrado = 0;
                 List<Producto> lista = dao.verProductos();
 
@@ -72,12 +75,12 @@ public class IngresarProducto extends  JFrame{
                 if(productoEncontrado == 0){
                     if(nombreProducto.equals("") || precioProducto.equals("")){
                         JOptionPane.showMessageDialog(ingresarProductoPanel,"Porfavor ingrese un producto valido");
-
+                        textoNombre.setText(null);
+                        textoPrecio.setText(null);
                     }
 
                     else{
-                        int transformador = Integer.parseInt(precioProducto);
-                        Producto producto = new Producto(nombreProducto,transformador);
+                        Producto producto = new Producto(nombreProducto,valor);
                         dao.IngresarProducto(producto);
                         JOptionPane.showMessageDialog(ingresarProductoPanel,"Producto Ingresado Correctamente");
                         textoNombre.setText(null);
@@ -86,7 +89,11 @@ public class IngresarProducto extends  JFrame{
                 }
 
 
-
+                }catch(Exception exception){
+                    JOptionPane.showMessageDialog(null,"Porfavor ingrese un producto valido");
+                    textoNombre.setText(null);
+                    textoPrecio.setText(null);
+                }
 
             }
         });
