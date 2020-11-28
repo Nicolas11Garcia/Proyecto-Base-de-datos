@@ -37,14 +37,13 @@ public class VerUser extends JFrame {
         Dao dao = new Dao(link);
         //Crear tabla
         modeloTabla = new DefaultTableModel();
-        modeloTabla = new DefaultTableModel();
         modeloTabla.addColumn("ID");
         modeloTabla.addColumn("Usuario");
 
         table1.setModel(modeloTabla);
         List<TrabajadorConID> lista1= dao.mostrarUsuariosID();
         for(TrabajadorConID p : lista1){
-            String [] s = new String[lista1.size()];
+            String [] s = new String[lista1.size() + 1];
             String numero = String.valueOf(p.getID());
 
             s [0] = numero;

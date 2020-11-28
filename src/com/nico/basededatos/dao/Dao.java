@@ -136,7 +136,6 @@ public class Dao {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
     }
 
     public List<IDproducto> IDdeProductos(){
@@ -159,6 +158,44 @@ public class Dao {
         }
         return lista;
     }
+
+    public void ActivarProducto(IDproducto id){
+        String sql = "CALL activar_producto("+id.getId()+")";
+        Connection con = myLink.getCon();
+        Statement statement = null;
+        try {
+            statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public List<FullProducto> VerProductosActivos(){
+        String sql = "SELECT * FROM producto WHERE activo = 1";
+        List<FullProducto> lista = new ArrayList();
+        Connection con = myLink.getCon();
+        Statement statement = null;
+        try {
+            statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            while(resultSet.next()){
+                int id = resultSet.getInt(1);
+                String nombre = resultSet.getString(2);
+                int precio  = resultSet.getInt(3);
+
+                FullProducto productoFull = new FullProducto(id,nombre,precio);
+                lista.add(productoFull);
+            }
+            return  lista;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return lista;
+    }
+
+
 
 
 
