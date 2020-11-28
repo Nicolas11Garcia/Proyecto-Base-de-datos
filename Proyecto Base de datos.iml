@@ -10,7 +10,11 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
+<<<<<<< HEAD
           <root url="jar://$USER_HOME$/Documents/flatlaf-0.36.jar!/" />
+=======
+          <root url="jar://$USER_HOME$/Documentos/mariadb-java-client-2.7.0.jar!/" />
+>>>>>>> fc5f12c1d9e51f1ea9e18595eeefce49bd356531
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -19,7 +23,20 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
+<<<<<<< HEAD
           <root url="jar://$USER_HOME$/Documents/mariadb-java-client-2.7.0.jar!/" />
+=======
+          <root url="jar://$USER_HOME$/Documentos/flatlaf-0.36.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/mariadb-java-client-2.7.0.jar!/" />
+>>>>>>> fc5f12c1d9e51f1ea9e18595eeefce49bd356531
         </CLASSES>
         <JAVADOC />
         <SOURCES />
