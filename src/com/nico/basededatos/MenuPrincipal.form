@@ -16,15 +16,6 @@
           <text value="Cerrar Sesión"/>
         </properties>
       </component>
-      <component id="35b19" class="javax.swing.JButton" binding="ingresarProductoButton" default-binding="true">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <font name="Javanese Text" style="0"/>
-          <text value="Ingresar Producto"/>
-        </properties>
-      </component>
       <component id="9e786" class="javax.swing.JButton" binding="buscarProductoButton" default-binding="true">
         <constraints>
           <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -104,6 +95,14 @@
         <properties>
           <font size="48"/>
           <text value="Menu Principal"/>
+        </properties>
+      </component>
+      <component id="76ac7" class="javax.swing.JButton" binding="ingresarProductoButton" default-binding="true">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="IngresarProducto"/>
         </properties>
       </component>
     </children>

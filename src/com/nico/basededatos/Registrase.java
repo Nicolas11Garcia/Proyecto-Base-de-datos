@@ -28,7 +28,7 @@ public class Registrase extends JFrame{
         int port = 3306;
         String db = "botilleria";
         String user = "root";
-        String pass = "";
+        String pass = "123";
         MyConnection link = new MyConnection(ip,user,pass,db);
 
         Dao registrarse = new Dao(link);
