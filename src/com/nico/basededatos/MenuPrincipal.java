@@ -26,7 +26,7 @@ public class MenuPrincipal extends JFrame{
         super("Menu");
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(400,400);
+        setSize(600,400);
         setLocationRelativeTo(null);
         add(panelMenu);
 

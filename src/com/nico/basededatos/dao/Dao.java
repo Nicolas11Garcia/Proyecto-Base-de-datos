@@ -1,9 +1,8 @@
 package com.nico.basededatos.dao;
 
-import com.nico.basededatos.MyConnection;
-import com.nico.basededatos.Trabajador;
-import com.nico.basededatos.TrabajadorConID;
+import com.nico.basededatos.*;
 
+import java.net.ConnectException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +62,42 @@ public class Dao {
                 String nombre = resultSet.getString(2);
 
                 TrabajadorConID trabajador = new TrabajadorConID(id,nombre);
+                lista.add(trabajador);
+            }
+            return  lista;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return lista;
+    }
+
+    public void IngresarProducto(Producto producto){
+        String sql = "CALL ingresar_producto('"+producto.getNombre()+"',"+producto.getPrecio()+")";
+        Connection con = myLink.getCon();
+
+        Statement statement = null;
+        try {
+            statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public List<Producto> verProductos(){
+        String sql = "SELECT * FROM producto";
+        List<Producto> lista = new ArrayList();
+        Connection con = myLink.getCon();
+        Statement statement = null;
+        try {
+            statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            while(resultSet.next()){
+                String nombre = resultSet.getString(2);
+                int precio  = resultSet.getInt(3);
+
+                Producto trabajador = new Producto(nombre,precio);
                 lista.add(trabajador);
             }
             return  lista;

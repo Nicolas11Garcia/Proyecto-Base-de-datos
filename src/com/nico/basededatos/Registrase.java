@@ -69,6 +69,8 @@ public class Registrase extends JFrame{
                         Trabajador trabajador = new Trabajador(nuevousuario,nuevaPass);
                         registrarse.AgregarUser(trabajador);
                         JOptionPane.showMessageDialog(panelRegistrarse,"Usuario Ingresado");}
+                        usuarioNew.setText(null);
+                        passNew.setText(null);
                 }
                 }
 
