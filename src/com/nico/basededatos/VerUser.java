@@ -31,7 +31,7 @@ public class VerUser extends JFrame {
         int port = 3306;
         String db = "botilleria";
         String user = "root";
-        String pass = "123";
+        String pass = "";
         MyConnection link = new MyConnection(ip,user,pass,db);
 
         Dao dao = new Dao(link);
