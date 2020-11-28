@@ -2,16 +2,20 @@ package com.nico.basededatos;
 
 import com.nico.basededatos.MenuPrincipal;
 import com.nico.basededatos.MyConnection;
+import com.nico.basededatos.dao.Dao;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.List;
 
 public class VerUser extends JFrame {
     private JTable table1;
     private JButton atrasButton;
     private JPanel verUser;
+    private DefaultTableModel modeloTabla;
 
     public VerUser() throws SQLException {
         super("Menu");
@@ -21,6 +25,7 @@ public class VerUser extends JFrame {
         setLocationRelativeTo(null);
         add(verUser);
 
+
         // Conexion sql
         String ip = "localhost";
         int port = 3306;
@@ -28,6 +33,27 @@ public class VerUser extends JFrame {
         String user = "root";
         String pass = "";
         MyConnection link = new MyConnection(ip,user,pass,db);
+
+        Dao dao = new Dao(link);
+        //Crear tabla
+        modeloTabla = new DefaultTableModel();
+        modeloTabla = new DefaultTableModel();
+        modeloTabla.addColumn("ID");
+        modeloTabla.addColumn("Usuario");
+
+        table1.setModel(modeloTabla);
+        List<TrabajadorConID> lista1= dao.mostrarUsuariosID();
+        for(TrabajadorConID p : lista1){
+            String [] s = new String[lista1.size()];
+            String numero = String.valueOf(p.getID());
+
+            s [0] = numero;
+            s [1] = p.getUsuario();
+
+            modeloTabla.addRow(s);
+
+        }
+
 
         atrasButton.addActionListener(new ActionListener() {
             @Override
