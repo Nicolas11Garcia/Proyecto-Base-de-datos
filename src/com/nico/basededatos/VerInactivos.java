@@ -37,7 +37,6 @@ public class VerInactivos extends JFrame{
         //Crear tabla
         modeloTabla = new DefaultTableModel();
         modeloTabla = new DefaultTableModel();
-        modeloTabla.addColumn("ID");
         modeloTabla.addColumn("ID Producto");
         modeloTabla.addColumn("Producto");
         modeloTabla.addColumn("Precio");
@@ -51,12 +50,10 @@ public class VerInactivos extends JFrame{
             String id_produc = String.valueOf(p.getID_Producto());
             String precio = String.valueOf(p.getPrecio());
 
-
-            s[0] = id;
-            s[1] = id_produc;
-            s[2] = p.getProducto();
-            s[3] = precio;
-            s[4] = p.getDesactivado();
+            s[0] = id_produc;
+            s[1] = p.getProducto();
+            s[2] = precio;
+            s[3] = p.getDesactivado();
 
             modeloTabla.addRow(s);
         }

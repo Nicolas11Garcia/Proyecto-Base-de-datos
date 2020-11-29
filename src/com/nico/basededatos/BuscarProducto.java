@@ -71,7 +71,7 @@ public class BuscarProducto extends JFrame{
                     }
 
                     if(idProductoEncontrado == 1){
-                        JOptionPane.showMessageDialog(buscarProducto,"El Producto Buscado: " + daoBuscar.buscarProducto(buscar));
+                        JOptionPane.showMessageDialog(buscarProducto,"El Producto Buscado es: " + daoBuscar.buscarProducto(buscar));
                         buscarText.setText(null);
                     }else{
                         JOptionPane.showMessageDialog(buscarProducto,"Producto no encontrado");

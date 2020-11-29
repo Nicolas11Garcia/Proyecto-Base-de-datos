@@ -22,7 +22,6 @@ CREATE TABLE cliente (
     UNIQUE (rut)
 );
 
-
 CREATE TABLE producto(
     id INT AUTO_INCREMENT,
     nombre VARCHAR(100),
@@ -30,7 +29,8 @@ CREATE TABLE producto(
     activo BIT,
 
     PRIMARY KEY(id)
-); 
+);
+
 
 CREATE TABLE factura (
     id INT AUTO_INCREMENT,
@@ -40,7 +40,6 @@ CREATE TABLE factura (
     PRIMARY KEY (id),
     FOREIGN KEY (cliente_id_fk) REFERENCES cliente(id)
 );
-  
 
 CREATE TABLE detalle(
     id INT AUTO_INCREMENT,
@@ -53,6 +52,7 @@ CREATE TABLE detalle(
     FOREIGN KEY (factura_id_fk) REFERENCES factura(id),
     FOREIGN KEY (producto_id_fk) REFERENCES producto(id)
 );
+
 
 CREATE TABLE productos_inactivos(
     id INT AUTO_INCREMENT,
@@ -208,10 +208,91 @@ END //
 DELIMITER ;
 
 
+--  Ver total con el nombre de los productos y la fecha en la que se compraron, segun fecha ingresada 
+DELIMITER //
+CREATE PROCEDURE ver_pro_fecha_total(IN _desde DATETIME,_hasta DATETIME)
+BEGIN
+    DECLARE verificador_1 INT;
+    DECLARE verificador_2 INT;
 
--- Para llamar a los procedimientos
-CALL ingresar_producto("hello",500);
-CALL desactivar_producto(3);
-CALL activar_producto(3);
-CALL cambiar_pass('nico','hola','holamundo');
-SELECT ver_producto(1); 
+    SET verificador_1 = (SELECT COUNT(*)
+    FROM detalle
+    INNER JOIN factura ON factura.id = detalle.factura_id_fk
+    WHERE factura.fecha >= _desde);
+
+    SET verificador_2 = (SELECT COUNT(*)
+    FROM detalle
+    INNER JOIN factura ON factura.id = detalle.factura_id_fk
+    WHERE factura.fecha <= _hasta);
+
+    IF verificador_1 >= 1 and verificador_2 >= 1 THEN 
+        SELECT producto.nombre,factura.fecha, detalle.precio
+        FROM detalle
+        INNER JOIN factura on detalle.factura_id_fk = factura.id
+        INNER JOIN producto on producto.id = detalle.producto_id_fk
+        WHERE factura.fecha >= _desde AND factura.fecha <= _hasta
+        UNION
+        SELECT '','Total',SUM(detalle.precio)
+        FROM detalle
+        INNER JOIN factura on detalle.factura_id_fk = factura.id
+        WHERE factura.fecha >= _desde AND factura.fecha <= _hasta;
+    ELSE
+        SELECT 'Error' AS 'Alerta';
+    END IF;
+END //
+DELIMITER ;
+
+
+-- INSERT
+-- CLIENTE
+INSERT INTO cliente VALUES(NULL,'20852522-2','Benito Martinez');
+INSERT INTO cliente VALUES(NULL,'20213321-5','Roberto Dueñas');
+INSERT INTO cliente VALUES(NULL,'20521984-1','Hugo Lloris');
+INSERT INTO cliente VALUES(NULL,'19321333-2','Francisco Perez');
+INSERT INTO cliente VALUES(NULL,'09232321-6','Esteban Jimenez');
+
+-- Facturas
+INSERT INTO factura VALUES (NULL,1,'2020-08-15 22:49:59');
+INSERT INTO factura VALUES (NULL,3,'2020-08-15 21:32:30');
+INSERT INTO factura VALUES (NULL,2,'2020-08-15 18:42:50');
+INSERT INTO factura VALUES (NULL,2,'2020-08-02 13:20:20');
+INSERT INTO factura VALUES (NULL,4,'2020-08-21 12:43:15');
+
+INSERT INTO factura VALUES (NULL,5,'2020-09-19 14:20:39');
+INSERT INTO factura VALUES (NULL,5,'2020-09-17 22:21:50');
+INSERT INTO factura VALUES (NULL,1,'2020-09-18 11:12:30');
+INSERT INTO factura VALUES (NULL,1,'2020-09-17 17:40:32');
+INSERT INTO factura VALUES (NULL,3,'2020-09-18 13:33:35');
+
+
+-- Productos
+INSERT INTO producto VALUES (NULL,'Coca-Cola 3lt',2100,1);
+INSERT INTO producto VALUES (NULL,'Sprite 3lt',2000,1);
+INSERT INTO producto VALUES (NULL,'Pack Escudo-12 Latas',5900,1);
+INSERT INTO producto VALUES (NULL,'Misiones de Rengo 1lt',2300,1);
+INSERT INTO producto VALUES (NULL,'Alto del Carmen 1lt',2700,1);
+INSERT INTO producto VALUES (NULL,'Corona 710ml',1100,1);
+INSERT INTO producto VALUES (NULL,'Pack Cristal-12 Latas',6000,1);
+INSERT INTO producto VALUES (NULL,'Dorada 1.2Lt',1400,1);
+INSERT INTO producto VALUES (NULL,'Cerveza Mestra Stout 330ml',900,1);
+INSERT INTO producto VALUES (NULL,'Cerveza Nomade IPA 333ml',600,1);
+INSERT INTO producto VALUES (NULL,'Cerveza Cuello Negro Ámbar Botella 330ml',750,1);
+INSERT INTO producto VALUES (NULL,'Cerveza Bundor Troll Oatmeal Stout botella 330ml',800,1);
+
+-- Detalle                     Factura, Producto, Cantidad,              precio  
+INSERT INTO detalle VALUES (NULL,     1,      1,        1,          (SELECT precio FROM producto WHERE id = 1) * 1);
+INSERT INTO detalle VALUES (NULL,     1,      10,        3,          (SELECT precio FROM producto WHERE id = 10) * 3);
+INSERT INTO detalle VALUES (NULL,     2,      9,        4,          (SELECT precio FROM producto WHERE id = 9) * 4);
+INSERT INTO detalle VALUES (NULL,     3,      2,        1,          (SELECT precio FROM producto WHERE id = 2) * 1);
+INSERT INTO detalle VALUES (NULL,     4,      2,        8,          (SELECT precio FROM producto WHERE id = 2) * 8);
+INSERT INTO detalle VALUES (NULL,     4,      5,        3,          (SELECT precio FROM producto WHERE id = 5) * 3);
+INSERT INTO detalle VALUES (NULL,     5,      5,        2,          (SELECT precio FROM producto WHERE id = 5) * 2);
+INSERT INTO detalle VALUES (NULL,     6,      6,        1,          (SELECT precio FROM producto WHERE id = 6) * 1);
+INSERT INTO detalle VALUES (NULL,     7,      1,        5,          (SELECT precio FROM producto WHERE id = 1) * 5);
+INSERT INTO detalle VALUES (NULL,     8,      10,        8,          (SELECT precio FROM producto WHERE id = 10) * 8);
+INSERT INTO detalle VALUES (NULL,     9,      11,        9,          (SELECT precio FROM producto WHERE id = 11) * 9);
+INSERT INTO detalle VALUES (NULL,     10,      4,        10,          (SELECT precio FROM producto WHERE id = 4) * 10);
+
+
+
+

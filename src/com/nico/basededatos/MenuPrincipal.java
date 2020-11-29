@@ -151,7 +151,7 @@ public class MenuPrincipal extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
                 try {
-                    VendidoMes vendidoMes = new VendidoMes();
+                    TotalVendido vendidoMes = new TotalVendido();
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
