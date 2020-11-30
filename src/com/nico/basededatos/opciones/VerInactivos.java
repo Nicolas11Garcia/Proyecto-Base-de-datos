@@ -1,9 +1,8 @@
 package com.nico.basededatos.opciones;
 
-import com.nico.basededatos.Inactivos;
+import com.nico.basededatos.clases.Inactivos;
 import com.nico.basededatos.MyConnection.MyConnection;
 import com.nico.basededatos.dao.Dao;
-import com.nico.basededatos.opciones.MenuPrincipal;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -19,7 +18,7 @@ public class VerInactivos extends JFrame{
     private DefaultTableModel modeloTabla;
 
     public VerInactivos() throws SQLException {
-        super("Menu");
+        super("Ver Productos Inactivos");
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(700,400);

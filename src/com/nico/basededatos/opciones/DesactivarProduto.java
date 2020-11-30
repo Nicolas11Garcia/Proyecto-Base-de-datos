@@ -1,6 +1,6 @@
 package com.nico.basededatos.opciones;
 
-import com.nico.basededatos.IDproducto;
+import com.nico.basededatos.clases.IDproducto;
 import com.nico.basededatos.MyConnection.MyConnection;
 import com.nico.basededatos.dao.Dao;
 
@@ -17,7 +17,7 @@ public class DesactivarProduto extends  JFrame{
     private JButton desactivarButton;
 
     public DesactivarProduto() throws SQLException {
-        super("Menu");
+        super("Desactivar Producto");
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(600,400);

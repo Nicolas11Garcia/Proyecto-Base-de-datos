@@ -1,6 +1,6 @@
 package com.nico.basededatos.opciones;
 
-import com.nico.basededatos.IDproducto;
+import com.nico.basededatos.clases.IDproducto;
 import com.nico.basededatos.MyConnection.MyConnection;
 import com.nico.basededatos.dao.Dao;
 

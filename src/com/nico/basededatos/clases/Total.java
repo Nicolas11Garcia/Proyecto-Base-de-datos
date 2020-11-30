@@ -1,4 +1,4 @@
-package com.nico.basededatos.opciones;
+package com.nico.basededatos.clases;
 
 public class Total {
     private String nombre;

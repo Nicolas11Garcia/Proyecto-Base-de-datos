@@ -1,6 +1,6 @@
 package com.nico.basededatos.opciones;
 
-import com.nico.basededatos.FullProducto;
+import com.nico.basededatos.clases.FullProducto;
 import com.nico.basededatos.MyConnection.MyConnection;
 import com.nico.basededatos.dao.Dao;
 
@@ -19,7 +19,7 @@ public class VerProductoActivos extends  JFrame{
     private DefaultTableModel modeloTabla;
 
     public VerProductoActivos() throws SQLException {
-        super("Menu");
+        super("Ver Productos Activos");
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(600,400);

@@ -1,9 +1,8 @@
 package com.nico.basededatos.opciones;
 
 import com.nico.basededatos.MyConnection.MyConnection;
-import com.nico.basededatos.Trabajador;
+import com.nico.basededatos.clases.Trabajador;
 import com.nico.basededatos.dao.Dao;
-import com.nico.basededatos.opciones.InterfazLogin;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -19,7 +18,7 @@ public class Registrase extends JFrame{
     private JButton atrasButton;
 
     public Registrase() throws SQLException {
-        super("Login");
+        super("Registrarse");
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(400,400);

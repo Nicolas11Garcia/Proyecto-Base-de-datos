@@ -1,9 +1,8 @@
 package com.nico.basededatos.opciones;
 
 import com.nico.basededatos.MyConnection.MyConnection;
-import com.nico.basededatos.TrabajadorConID;
+import com.nico.basededatos.clases.TrabajadorConID;
 import com.nico.basededatos.dao.Dao;
-import com.nico.basededatos.opciones.MenuPrincipal;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -19,7 +18,7 @@ public class VerUser extends JFrame {
     private DefaultTableModel modeloTabla;
 
     public VerUser() throws SQLException {
-        super("Menu");
+        super("Ver Usuarios");
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(600,400);

@@ -1,24 +1,14 @@
-package com.nico.basededatos;
+package com.nico.basededatos.clases;
 
-public class FullProducto {
-    private int ID;
+public class Producto {
     private String nombre;
     private int precio;
 
-    public FullProducto(int ID, String nombre, int precio) {
-        this.ID = ID;
+    public Producto(String nombre, int precio){
         this.nombre = nombre;
         this.precio = precio;
-    }
 
-    public int getID() {
-        return ID;
     }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
     public String getNombre() {
         return nombre;
     }
@@ -26,6 +16,7 @@ public class FullProducto {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
 
     public int getPrecio() {
         return precio;

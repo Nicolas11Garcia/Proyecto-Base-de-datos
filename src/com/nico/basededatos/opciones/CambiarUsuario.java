@@ -1,8 +1,8 @@
 package com.nico.basededatos.opciones;
 
-import com.nico.basededatos.CambiarUsuarioAtributo;
+import com.nico.basededatos.clases.CambiarUsuarioAtributo;
 import com.nico.basededatos.MyConnection.MyConnection;
-import com.nico.basededatos.Trabajador;
+import com.nico.basededatos.clases.Trabajador;
 import com.nico.basededatos.dao.Dao;
 
 import javax.swing.*;
@@ -23,7 +23,7 @@ public class CambiarUsuario extends JFrame{
     private JButton cambiarUsuarioButton;
 
     public CambiarUsuario() throws SQLException {
-        super("Menu");
+        super("Cambiar Usuario");
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(600,400);

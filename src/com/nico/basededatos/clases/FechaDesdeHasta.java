@@ -1,4 +1,4 @@
-package com.nico.basededatos;
+package com.nico.basededatos.clases;
 
 public class FechaDesdeHasta {
     private String fechaDesde;

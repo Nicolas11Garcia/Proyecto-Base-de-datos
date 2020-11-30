@@ -1,9 +1,8 @@
 package com.nico.basededatos.opciones;
 
-import com.nico.basededatos.Contrasena;
+import com.nico.basededatos.clases.Contrasena;
 import com.nico.basededatos.MyConnection.MyConnection;
 import com.nico.basededatos.dao.Dao;
-import com.nico.basededatos.opciones.MenuPrincipal;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

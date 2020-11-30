@@ -1,4 +1,4 @@
-package com.nico.basededatos;
+package com.nico.basededatos.clases;
 
 import javax.swing.*;
 

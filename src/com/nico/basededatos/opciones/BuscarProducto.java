@@ -1,6 +1,6 @@
 package com.nico.basededatos.opciones;
 
-import com.nico.basededatos.IDproducto;
+import com.nico.basededatos.clases.IDproducto;
 import com.nico.basededatos.MyConnection.MyConnection;
 import com.nico.basededatos.dao.Dao;
 
@@ -19,7 +19,7 @@ public class BuscarProducto extends JFrame{
 
 
     public BuscarProducto() throws SQLException {
-        super("Menu");
+        super("Buscar Producto");
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(600,400);

@@ -1,8 +1,7 @@
 package com.nico.basededatos.dao;
 
-import com.nico.basededatos.*;
 import com.nico.basededatos.MyConnection.MyConnection;
-import com.nico.basededatos.opciones.Total;
+import com.nico.basededatos.clases.*;
 
 import javax.swing.*;
 import java.sql.*;

@@ -1,7 +1,7 @@
 package com.nico.basededatos.opciones;
 
 import com.nico.basededatos.MyConnection.MyConnection;
-import com.nico.basededatos.Producto;
+import com.nico.basededatos.clases.Producto;
 import com.nico.basededatos.dao.Dao;
 
 import javax.swing.*;
@@ -19,7 +19,7 @@ public class IngresarProducto extends  JFrame{
 
 
     public IngresarProducto() throws SQLException {
-        super("Menu");
+        super("Ingresar Producto");
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(600,400);

@@ -1,7 +1,8 @@
 package com.nico.basededatos.opciones;
 
-import com.nico.basededatos.FechaDesdeHasta;
+import com.nico.basededatos.clases.FechaDesdeHasta;
 import com.nico.basededatos.MyConnection.MyConnection;
+import com.nico.basededatos.clases.Total;
 import com.nico.basededatos.dao.Dao;
 
 import javax.swing.*;
@@ -23,7 +24,7 @@ public class TotalVendido extends JFrame {
 
 
     public TotalVendido() throws SQLException {
-        super("Menu");
+        super("Total Vendido");
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(600,400);
