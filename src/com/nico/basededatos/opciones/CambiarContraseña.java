@@ -69,6 +69,10 @@ public class CambiarContraseña extends JFrame{
                             Contrasena cambiarPass = new Contrasena(usuario,pass,nuevaPass);
                             dao.CambiarContrasena(cambiarPass);
                             JOptionPane.showMessageDialog(cambiarContraseña,"Contraseña cambiada con Exito");
+                            cambiarpassUsuarioText.setText(null);
+                            cambiarPassText.setText(null);
+                            nuevaPassText.setText(null);
+
                         }
                     }
                     else{

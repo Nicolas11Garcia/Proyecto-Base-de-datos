@@ -17,6 +17,7 @@ public class InterfazLogin extends JFrame{
     private JButton entrarButton;
     private JPanel panelLogin;
     private JButton registarseButton;
+    private JButton salirButton;
 
     public InterfazLogin() throws SQLException {
         super("Login");
@@ -81,6 +82,14 @@ public class InterfazLogin extends JFrame{
 
 
 
+            }
+        });
+
+
+        salirButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
             }
         });
 

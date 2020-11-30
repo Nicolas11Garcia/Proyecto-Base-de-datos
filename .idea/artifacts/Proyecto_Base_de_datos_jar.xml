@@ -3,8 +3,8 @@
     <output-path>$PROJECT_DIR$/out/artifacts/Proyecto_Base_de_datos_jar</output-path>
     <root id="archive" name="Proyecto Base de datos.jar">
       <element id="module-output" name="Proyecto Base de datos" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/src/com/nico/basededatos/librerias/flatlaf-0.36.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/src/com/nico/basededatos/librerias/mariadb-java-client-2.7.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/com/nico/basededatos/librerias/flatlaf-0.36.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

@@ -23,7 +23,7 @@ public class CambiarUsuario extends JFrame{
     private JButton cambiarUsuarioButton;
 
     public CambiarUsuario() throws SQLException {
-        super("Cambiar Usuario");
+        super("Cambiar Nombre de Usuario");
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(600,400);
