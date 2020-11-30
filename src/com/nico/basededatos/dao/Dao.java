@@ -2,6 +2,7 @@ package com.nico.basededatos.dao;
 
 import com.nico.basededatos.MyConnection.MyConnection;
 import com.nico.basededatos.clases.*;
+import com.nico.basededatos.opciones.DesactivarProduto;
 
 import javax.swing.*;
 import java.sql.*;
@@ -273,6 +274,31 @@ public class Dao {
         }
         return lista;
     }
+
+    public List<proIDantiguos> listaIDantiguosDesactivados() {
+        String sql = "SELECT * FROM productos_inactivos";
+
+        List<proIDantiguos> lista = new ArrayList();
+        Connection con = myLink.getCon();
+        Statement statement = null;
+        try {
+            statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            while (resultSet.next()) {
+
+                int id = resultSet.getInt(2);
+
+                proIDantiguos total1 = new proIDantiguos(id);
+                lista.add(total1);
+            }
+            return lista;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return lista;
+    }
+
 
 
 

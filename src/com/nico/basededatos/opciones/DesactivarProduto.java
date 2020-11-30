@@ -2,12 +2,16 @@ package com.nico.basededatos.opciones;
 
 import com.nico.basededatos.clases.IDproducto;
 import com.nico.basededatos.MyConnection.MyConnection;
+import com.nico.basededatos.clases.proIDantiguos;
 import com.nico.basededatos.dao.Dao;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 public class DesactivarProduto extends  JFrame{
@@ -55,6 +59,16 @@ public class DesactivarProduto extends  JFrame{
                     Integer valor = (Integer) textField.getValue();
 
                     List<IDproducto> lista = dao.IDdeProductos();
+                    List<proIDantiguos> listaIdDesactivados = dao.listaIDantiguosDesactivados();
+
+                    int idAntiguoEncontrado = 0;
+
+                    for(proIDantiguos t : listaIdDesactivados){
+                        if(t.getId_antiguo() == valor){
+                            idAntiguoEncontrado = idAntiguoEncontrado + 1;
+                        }
+                    }
+
                     int idProductoEncontrado = 0;
 
                     for(IDproducto p : lista){
@@ -63,7 +77,12 @@ public class DesactivarProduto extends  JFrame{
                             break;
                         }
                     }
-                    if(idProductoEncontrado == 1){
+
+                    if(idAntiguoEncontrado == 1){
+                        JOptionPane.showMessageDialog(panelDesactivar,"El producto ya esta desactivado");
+                        idTexto.setText(null);
+                    }
+                    else if(idProductoEncontrado == 1){
                         IDproducto iDproducto = new IDproducto(valor);
                         dao.DesactivarProducto(iDproducto);
                         JOptionPane.showMessageDialog(panelDesactivar,"Producto Desactivado Correctamente");
