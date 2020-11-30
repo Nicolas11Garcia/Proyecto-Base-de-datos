@@ -1,6 +1,6 @@
 # Problematica
 ## ¿Que haremos?
-El dueño de una botilleria familiar nos contacta porque no cuentan con un software que realice las opciones que necesitan, por ejemplo nos cuentan que para saber cuanto vendieron al mes, necesitan sumar a mano las ventas que le arroja el sistema, tambien nos dice que en su stock se visualizan productos que ya no existen en su negocio.
+El dueño de una botillería familiar nos contacta porque no cuentan con un software que realice las opciones que necesitan, por ejemplo nos cuentan que para saber cuanto vendieron al mes, necesitan sumar a mano las ventas que le arroja el sistema, también nos dice que en su stock se visualizan productos que ya no existen en su negocio.
 Debido a esto nos piden los siguientes requisitos:
 
 *  Ingresar productos
@@ -12,9 +12,9 @@ Debido a esto nos piden los siguientes requisitos:
 *  Cambiar Contraseña
 *  Cambiar nombre de usuario
 *  Ver lo vendido en el mes
-*  Ver todos los usuarios de la botilleria
+*  Ver todos los usuarios de la botillería
 *  Registrarse
-*  Un inicio de sesion
+*  Un inicio de sesión
 
 ## Imagen
 
