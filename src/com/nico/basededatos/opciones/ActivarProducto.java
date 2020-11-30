@@ -10,19 +10,20 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.List;
 
-public class DesactivarProduto extends  JFrame{
-    private JPanel panelDesactivar;
+public class ActivarProducto extends JFrame {
     private JButton atrasButton;
-    private JTextField idTexto;
-    private JButton desactivarButton;
+    private JTextField activarText;
+    private JButton activarButton;
+    private JPanel ActivarProducto;
 
-    public DesactivarProduto() throws SQLException {
-        super("Menu");
+
+    public ActivarProducto() throws SQLException {
+        super("Activar Producto");
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(600,400);
         setLocationRelativeTo(null);
-        add(panelDesactivar);
+        add(ActivarProducto);
 
         // Conexion sql
         String ip = "localhost";
@@ -44,12 +45,11 @@ public class DesactivarProduto extends  JFrame{
             }
         });
 
-        desactivarButton.addActionListener(new ActionListener() {
+        activarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 try{
-                    String idText = idTexto.getText();
+                    String idText = activarText.getText();
                     //Convertir en int y restringir acceso a solo numeros
                     JFormattedTextField textField = new JFormattedTextField(new Integer(idText));
                     Integer valor = (Integer) textField.getValue();
@@ -65,26 +65,19 @@ public class DesactivarProduto extends  JFrame{
                     }
                     if(idProductoEncontrado == 1){
                         IDproducto iDproducto = new IDproducto(valor);
-                        dao.DesactivarProducto(iDproducto);
-                        JOptionPane.showMessageDialog(panelDesactivar,"Producto Desactivado Correctamente");
-                        idTexto.setText(null);
+                        dao.ActivarProducto(iDproducto);
+                        JOptionPane.showMessageDialog(ActivarProducto,"Producto Activado Correctamente");
+                        activarText.setText(null);
                     }else{
-                        JOptionPane.showMessageDialog(panelDesactivar,"ID no encontrado");
-                        idTexto.setText(null);
+                        JOptionPane.showMessageDialog(ActivarProducto,"ID no encontrado");
+                        activarText.setText(null);
                     }
                 }catch(Exception exception){
                     JOptionPane.showMessageDialog(null,"Ingrese un ID valido");
-                    idTexto.setText(null);
+                        activarText.setText(null);
                 }
-
-
-
-
-
             }
         });
-
-
 
     }
 }

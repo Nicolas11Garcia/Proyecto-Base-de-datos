@@ -10,19 +10,21 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.List;
 
-public class DesactivarProduto extends  JFrame{
-    private JPanel panelDesactivar;
-    private JButton atrasButton;
-    private JTextField idTexto;
-    private JButton desactivarButton;
 
-    public DesactivarProduto() throws SQLException {
+public class BuscarProducto extends JFrame{
+    private JButton atrasButton;
+    private JTextField buscarText;
+    private JButton buscarButton;
+    private JPanel buscarProducto;
+
+
+    public BuscarProducto() throws SQLException {
         super("Menu");
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(600,400);
         setLocationRelativeTo(null);
-        add(panelDesactivar);
+        add(buscarProducto);
 
         // Conexion sql
         String ip = "localhost";
@@ -31,7 +33,9 @@ public class DesactivarProduto extends  JFrame{
         String user = "root";
         String pass = "";
         MyConnection link = new MyConnection(ip,user,pass,db);
-        Dao dao = new Dao(link);
+        Dao daoBuscar = new Dao(link);
+
+
         atrasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -44,18 +48,22 @@ public class DesactivarProduto extends  JFrame{
             }
         });
 
-        desactivarButton.addActionListener(new ActionListener() {
+        buscarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 try{
-                    String idText = idTexto.getText();
+                    String idText = buscarText.getText();
                     //Convertir en int y restringir acceso a solo numeros
                     JFormattedTextField textField = new JFormattedTextField(new Integer(idText));
                     Integer valor = (Integer) textField.getValue();
 
-                    List<IDproducto> lista = dao.IDdeProductos();
+                    //Se crea la clase IDproducto para daoBuscar lo reciba
+                    IDproducto buscar = new IDproducto(valor);
+
                     int idProductoEncontrado = 0;
+                    //Lista
+                    List<IDproducto> lista = daoBuscar.IDdeProductos();
 
                     for(IDproducto p : lista){
                         if(p.getId() == valor){
@@ -63,18 +71,17 @@ public class DesactivarProduto extends  JFrame{
                             break;
                         }
                     }
+
                     if(idProductoEncontrado == 1){
-                        IDproducto iDproducto = new IDproducto(valor);
-                        dao.DesactivarProducto(iDproducto);
-                        JOptionPane.showMessageDialog(panelDesactivar,"Producto Desactivado Correctamente");
-                        idTexto.setText(null);
+                        JOptionPane.showMessageDialog(buscarProducto,"El Producto Buscado es: " + daoBuscar.buscarProducto(buscar));
+                        buscarText.setText(null);
                     }else{
-                        JOptionPane.showMessageDialog(panelDesactivar,"ID no encontrado");
-                        idTexto.setText(null);
+                        JOptionPane.showMessageDialog(buscarProducto,"Producto no encontrado");
+                        buscarText.setText(null);
                     }
                 }catch(Exception exception){
                     JOptionPane.showMessageDialog(null,"Ingrese un ID valido");
-                    idTexto.setText(null);
+                    buscarText.setText(null);
                 }
 
 
@@ -83,6 +90,7 @@ public class DesactivarProduto extends  JFrame{
 
             }
         });
+
 
 
 

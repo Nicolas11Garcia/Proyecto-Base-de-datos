@@ -1,6 +1,6 @@
 package com.nico.basededatos;
 import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatLaf;
+import com.nico.basededatos.opciones.InterfazLogin;
 
 import java.sql.SQLException;
 

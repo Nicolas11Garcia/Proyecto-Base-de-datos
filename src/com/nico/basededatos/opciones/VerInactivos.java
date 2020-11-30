@@ -1,8 +1,9 @@
 package com.nico.basededatos.opciones;
 
-import com.nico.basededatos.FullProducto;
+import com.nico.basededatos.Inactivos;
 import com.nico.basededatos.MyConnection.MyConnection;
 import com.nico.basededatos.dao.Dao;
+import com.nico.basededatos.opciones.MenuPrincipal;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -11,20 +12,19 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.List;
 
-public class VerProductoActivos extends  JFrame{
-    private JPanel verActivos;
-    private JTable table1;
+public class VerInactivos extends JFrame{
     private JButton atrasButton;
-
+    private JTable table1;
+    private JPanel ProductosInactivo;
     private DefaultTableModel modeloTabla;
 
-    public VerProductoActivos() throws SQLException {
+    public VerInactivos() throws SQLException {
         super("Menu");
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(600,400);
+        setSize(700,400);
         setLocationRelativeTo(null);
-        add(verActivos);
+        add(ProductosInactivo);
 
         // Conexion sql
         String ip = "localhost";
@@ -35,29 +35,30 @@ public class VerProductoActivos extends  JFrame{
         MyConnection link = new MyConnection(ip,user,pass,db);
 
         Dao dao = new Dao(link);
-
         //Crear tabla
         modeloTabla = new DefaultTableModel();
-        modeloTabla.addColumn("ID");
-        modeloTabla.addColumn("Nombre");
+        modeloTabla = new DefaultTableModel();
+        modeloTabla.addColumn("ID Producto");
+        modeloTabla.addColumn("Producto");
         modeloTabla.addColumn("Precio");
+        modeloTabla.addColumn("Fecha de Desactivación");
 
         table1.setModel(modeloTabla);
-
-        List<FullProducto> lista = dao.VerProductosActivos();
-
-        for(FullProducto p : lista){
-            String [] s = new String[lista.size() + 1];
+        List<Inactivos> lista2= dao.verInactivos();
+        for(Inactivos p : lista2) {
+            String[] s = new String[lista2.size() + 4];
             String id = String.valueOf(p.getID());
+            String id_produc = String.valueOf(p.getID_Producto());
             String precio = String.valueOf(p.getPrecio());
 
-            s [0] = id;
-            s [1] = p.getNombre();
-            s [2] = precio;
+            s[0] = id_produc;
+            s[1] = p.getProducto();
+            s[2] = precio;
+            s[3] = p.getDesactivado();
 
             modeloTabla.addRow(s);
-
         }
+
 
 
 

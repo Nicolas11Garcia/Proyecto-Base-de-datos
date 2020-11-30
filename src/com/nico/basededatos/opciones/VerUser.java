@@ -1,8 +1,9 @@
 package com.nico.basededatos.opciones;
 
-import com.nico.basededatos.FullProducto;
 import com.nico.basededatos.MyConnection.MyConnection;
+import com.nico.basededatos.TrabajadorConID;
 import com.nico.basededatos.dao.Dao;
+import com.nico.basededatos.opciones.MenuPrincipal;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -11,20 +12,20 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.List;
 
-public class VerProductoActivos extends  JFrame{
-    private JPanel verActivos;
+public class VerUser extends JFrame {
     private JTable table1;
     private JButton atrasButton;
-
+    private JPanel verUser;
     private DefaultTableModel modeloTabla;
 
-    public VerProductoActivos() throws SQLException {
+    public VerUser() throws SQLException {
         super("Menu");
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(600,400);
         setLocationRelativeTo(null);
-        add(verActivos);
+        add(verUser);
+
 
         // Conexion sql
         String ip = "localhost";
@@ -35,30 +36,23 @@ public class VerProductoActivos extends  JFrame{
         MyConnection link = new MyConnection(ip,user,pass,db);
 
         Dao dao = new Dao(link);
-
         //Crear tabla
         modeloTabla = new DefaultTableModel();
         modeloTabla.addColumn("ID");
-        modeloTabla.addColumn("Nombre");
-        modeloTabla.addColumn("Precio");
+        modeloTabla.addColumn("Usuario");
 
         table1.setModel(modeloTabla);
+        List<TrabajadorConID> lista1= dao.mostrarUsuariosID();
+        for(TrabajadorConID p : lista1){
+            String [] s = new String[lista1.size() + 1];
+            String numero = String.valueOf(p.getID());
 
-        List<FullProducto> lista = dao.VerProductosActivos();
-
-        for(FullProducto p : lista){
-            String [] s = new String[lista.size() + 1];
-            String id = String.valueOf(p.getID());
-            String precio = String.valueOf(p.getPrecio());
-
-            s [0] = id;
-            s [1] = p.getNombre();
-            s [2] = precio;
+            s [0] = numero;
+            s [1] = p.getUsuario();
 
             modeloTabla.addRow(s);
 
         }
-
 
 
         atrasButton.addActionListener(new ActionListener() {
@@ -74,7 +68,7 @@ public class VerProductoActivos extends  JFrame{
         });
 
 
-
-
     }
+
+
 }

@@ -1,7 +1,6 @@
 package com.nico.basededatos.opciones;
 
 import com.nico.basededatos.FechaDesdeHasta;
-import com.nico.basededatos.MenuPrincipal;
 import com.nico.basededatos.MyConnection.MyConnection;
 import com.nico.basededatos.dao.Dao;
 
