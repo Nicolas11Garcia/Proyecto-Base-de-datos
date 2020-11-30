@@ -1,4 +1,5 @@
-package com.nico.basededatos;
+package com.nico.basededatos.MyConnection;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;

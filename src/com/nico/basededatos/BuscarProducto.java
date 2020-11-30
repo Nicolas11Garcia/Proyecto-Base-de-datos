@@ -1,5 +1,6 @@
 package com.nico.basededatos;
 
+import com.nico.basededatos.MyConnection.MyConnection;
 import com.nico.basededatos.dao.Dao;
 
 import javax.swing.*;
@@ -29,7 +30,7 @@ public class BuscarProducto extends JFrame{
         int port = 3306;
         String db = "botilleria";
         String user = "root";
-        String pass = "123";
+        String pass = "";
         MyConnection link = new MyConnection(ip,user,pass,db);
         Dao daoBuscar = new Dao(link);
 

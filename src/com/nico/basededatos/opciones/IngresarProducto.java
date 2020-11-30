@@ -1,9 +1,8 @@
 package com.nico.basededatos.opciones;
 
 import com.nico.basededatos.MenuPrincipal;
-import com.nico.basededatos.MyConnection;
+import com.nico.basededatos.MyConnection.MyConnection;
 import com.nico.basededatos.Producto;
-import com.nico.basededatos.Trabajador;
 import com.nico.basededatos.dao.Dao;
 
 import javax.swing.*;
@@ -33,7 +32,7 @@ public class IngresarProducto extends  JFrame{
         int port = 3306;
         String db = "botilleria";
         String user = "root";
-        String pass = "123";
+        String pass = "";
         MyConnection link = new MyConnection(ip,user,pass,db);
         Dao dao = new Dao(link);
 

@@ -1,19 +1,14 @@
 package com.nico.basededatos.opciones;
 
 import com.nico.basededatos.FechaDesdeHasta;
-import com.nico.basededatos.Inactivos;
 import com.nico.basededatos.MenuPrincipal;
-import com.nico.basededatos.MyConnection;
+import com.nico.basededatos.MyConnection.MyConnection;
 import com.nico.basededatos.dao.Dao;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.DefaultEditorKit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.KeyEvent;
-import java.security.Key;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -41,7 +36,7 @@ public class TotalVendido extends JFrame {
         int port = 3306;
         String db = "botilleria";
         String user = "root";
-        String pass = "123";
+        String pass = "";
         MyConnection link = new MyConnection(ip,user,pass,db);
 
         Dao dao = new Dao(link);
