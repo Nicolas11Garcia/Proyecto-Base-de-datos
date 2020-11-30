@@ -3,7 +3,7 @@ CREATE DATABASE botilleria;
 USE botilleria;
 
 -- TABLAS
-
+-- Crear Tabla Trabajador
 CREATE TABLE trabajador (
     id INT AUTO_INCREMENT,
     username VARCHAR(50),
@@ -12,7 +12,7 @@ CREATE TABLE trabajador (
     PRIMARY KEY (id),
     UNIQUE (username)
 );
-
+-- Crear Tabla Cliente
 CREATE TABLE cliente (
     id INT AUTO_INCREMENT,
     rut VARCHAR(13),
@@ -21,7 +21,7 @@ CREATE TABLE cliente (
     PRIMARY KEY (id),
     UNIQUE (rut)
 );
-
+-- Crear Tabla Producto
 CREATE TABLE producto(
     id INT AUTO_INCREMENT,
     nombre VARCHAR(100),
@@ -30,8 +30,7 @@ CREATE TABLE producto(
 
     PRIMARY KEY(id)
 );
-
-
+-- Crear Tabla Factura
 CREATE TABLE factura (
     id INT AUTO_INCREMENT,
     cliente_id_fk INT,
@@ -40,7 +39,7 @@ CREATE TABLE factura (
     PRIMARY KEY (id),
     FOREIGN KEY (cliente_id_fk) REFERENCES cliente(id)
 );
-
+-- Crear Tabla Detalle
 CREATE TABLE detalle(
     id INT AUTO_INCREMENT,
     factura_id_fk INT,
@@ -52,8 +51,7 @@ CREATE TABLE detalle(
     FOREIGN KEY (factura_id_fk) REFERENCES factura(id),
     FOREIGN KEY (producto_id_fk) REFERENCES producto(id)
 );
-
-
+-- Crear Tabal para los Productos Inactivos
 CREATE TABLE productos_inactivos(
     id INT AUTO_INCREMENT,
     id_antiguo_fk INT,
@@ -65,23 +63,20 @@ CREATE TABLE productos_inactivos(
     FOREIGN KEY (id_antiguo_fk) REFERENCES producto(id)
 );
 
-
-
-
 -- Procedimientos Almacenados
 
--- 1 Ingresar producto
+-- 1) Ingresar producto
 DELIMITER //
 CREATE PROCEDURE ingresar_producto(IN _nombre VARCHAR(100), _precio INT)
 BEGIN
 
-    DECLARE verificador INT ;
+    DECLARE verificar_ingreso INT;
 
-    SET verificador = (SELECT COUNT(*) 
+    SET verificar_ingreso = (SELECT COUNT(*) 
     FROM producto 
     WHERE nombre = _nombre);
 
-    IF verificador = 0 THEN 
+    IF verificar_ingreso = 0 THEN 
         INSERT INTO producto VALUES (NULL,_nombre,_precio,1);
         SELECT 'Producto Agregado con exito' AS 'Alerta';
     ELSE
@@ -90,20 +85,17 @@ BEGIN
 END //
 DELIMITER ; 
 
-
-
-
--- 2 Desactivar PRODUCTO
+-- 2) Desactivar PRODUCTO
 DELIMITER //
 CREATE PROCEDURE desactivar_producto(IN _id INT)
 BEGIN
-    DECLARE verificador_ INT;
+    DECLARE verificar_id_product INT;
 
-    SET verificador_ = (SELECT COUNT(*) 
+    SET verificar_id_product = (SELECT COUNT(*) 
     FROM producto 
     WHERE id = _id);
 
-    IF verificador_ = 1 THEN 
+    IF verificar_id_product = 1 THEN 
         UPDATE producto SET activo = 0 WHERE id = _id;
         SELECT 'Producto Desactivado' AS 'Alerta';
     ELSE
@@ -112,20 +104,17 @@ BEGIN
 END //
 DELIMITER ;
 
-
-
-
--- 3 Activar PRODUCTO
+-- 3) Activar PRODUCTO
 DELIMITER //
 CREATE PROCEDURE activar_producto(IN _id INT)
 BEGIN
-    DECLARE verificador_ INT;
+    DECLARE verificar_id_product INT;
 
-    SET verificador_ = (SELECT COUNT(*) 
+    SET verificar_id_product = (SELECT COUNT(*) 
     FROM producto 
     WHERE id = _id);
 
-    IF verificador_ = 1 THEN 
+    IF verificar_id_product = 1 THEN 
         UPDATE producto SET activo = 1 WHERE id = _id;
         SELECT 'Producto Activado' AS 'Alerta';
     ELSE
@@ -134,18 +123,17 @@ BEGIN
 END //
 DELIMITER ;
 
-
--- 4 Cambiar contraseña
+-- 4) Cambiar contraseña
 DELIMITER //
 CREATE PROCEDURE cambiar_pass(IN _user VARCHAR(50),_pass VARCHAR(200),passnew VARCHAR(200))
 BEGIN
-    DECLARE verificador_ INT;
+    DECLARE verificar_credenciales INT;
 
-    SET verificador_ = (SELECT COUNT(*) 
+    SET verificar_credenciales = (SELECT COUNT(*) 
     FROM trabajador 
     WHERE username = _user AND contraseña = SHA2(_pass,0));
 
-    IF verificador_ = 1 THEN 
+    IF verificar_credenciales = 1 THEN 
         UPDATE trabajador SET contraseña = SHA2(passnew,0) WHERE username = _user;
         SELECT 'Su contraseña a sido cambiada' AS 'Alerta';
     ELSE
@@ -155,22 +143,55 @@ END //
 DELIMITER ;
 
 
-
--- 5 Cambiar nombre de usuario
+-- 5) Cambiar nombre de usuario
 DELIMITER //
 CREATE PROCEDURE cambiar_user(IN _user VARCHAR(50),_pass VARCHAR(200),usernew VARCHAR(200))
 BEGIN
-    DECLARE verificador_ INT;
+    DECLARE verificar_credenciales INT;
 
-    SET verificador_ = (SELECT COUNT(*) 
+    SET verificar_credenciales = (SELECT COUNT(*) 
     FROM trabajador 
     WHERE username = _user AND contraseña = SHA2(_pass,0));
 
-    IF verificador_ = 1 THEN 
+    IF verificar_credenciales = 1 THEN 
         UPDATE trabajador SET username = usernew WHERE username = _user;
         SELECT 'Su usuario a sido cambiado' AS 'Alerta';
     ELSE
         SELECT 'El usuario o la contraseña son incorrectos' AS 'Alerta';
+    END IF;
+END //
+DELIMITER ;
+
+-- 6) Ver total con el nombre de los productos y la fecha en la que se compraron, segun fecha ingresada 
+DELIMITER //
+CREATE PROCEDURE ver_pro_fecha_total(IN _desde DATETIME,_hasta DATETIME)
+BEGIN
+    DECLARE verificador_existe_fecha_desde INT;
+    DECLARE verificador_existe_fecha_hasta INT;
+
+    SET verificador_existe_fecha_desde = (SELECT COUNT(*)
+    FROM detalle
+    INNER JOIN factura ON factura.id = detalle.factura_id_fk
+    WHERE factura.fecha >= _desde);
+
+    SET verificador_existe_fecha_hasta = (SELECT COUNT(*)
+    FROM detalle
+    INNER JOIN factura ON factura.id = detalle.factura_id_fk
+    WHERE factura.fecha <= _hasta);
+
+    IF verificador_existe_fecha_desde >= 1 and verificador_existe_fecha_hasta >= 1 THEN 
+        SELECT producto.nombre,factura.fecha, detalle.precio
+        FROM detalle
+        INNER JOIN factura on detalle.factura_id_fk = factura.id
+        INNER JOIN producto on producto.id = detalle.producto_id_fk
+        WHERE factura.fecha >= _desde AND factura.fecha <= _hasta
+        UNION
+        SELECT '','Total',SUM(detalle.precio)
+        FROM detalle
+        INNER JOIN factura on detalle.factura_id_fk = factura.id
+        WHERE factura.fecha >= _desde AND factura.fecha <= _hasta;
+    ELSE
+        SELECT 'No Existe Ventas en la Fecha Indicada' AS 'Alerta';
     END IF;
 END //
 DELIMITER ;
@@ -182,7 +203,6 @@ BEGIN
     RETURN (SELECT nombre FROM producto WHERE id = _id);
 END //
 DELIMITER ;
-
 
 -- Triggers
 -- 1) Cuando se desactive un producto que se guarde en la tabla
@@ -207,42 +227,6 @@ BEGIN
 END //
 DELIMITER ;
 
-
---  Ver total con el nombre de los productos y la fecha en la que se compraron, segun fecha ingresada 
-DELIMITER //
-CREATE PROCEDURE ver_pro_fecha_total(IN _desde DATETIME,_hasta DATETIME)
-BEGIN
-    DECLARE verificador_1 INT;
-    DECLARE verificador_2 INT;
-
-    SET verificador_1 = (SELECT COUNT(*)
-    FROM detalle
-    INNER JOIN factura ON factura.id = detalle.factura_id_fk
-    WHERE factura.fecha >= _desde);
-
-    SET verificador_2 = (SELECT COUNT(*)
-    FROM detalle
-    INNER JOIN factura ON factura.id = detalle.factura_id_fk
-    WHERE factura.fecha <= _hasta);
-
-    IF verificador_1 >= 1 and verificador_2 >= 1 THEN 
-        SELECT producto.nombre,factura.fecha, detalle.precio
-        FROM detalle
-        INNER JOIN factura on detalle.factura_id_fk = factura.id
-        INNER JOIN producto on producto.id = detalle.producto_id_fk
-        WHERE factura.fecha >= _desde AND factura.fecha <= _hasta
-        UNION
-        SELECT '','Total',SUM(detalle.precio)
-        FROM detalle
-        INNER JOIN factura on detalle.factura_id_fk = factura.id
-        WHERE factura.fecha >= _desde AND factura.fecha <= _hasta;
-    ELSE
-        SELECT 'Error' AS 'Alerta';
-    END IF;
-END //
-DELIMITER ;
-
-
 -- INSERT
 -- CLIENTE
 INSERT INTO cliente VALUES(NULL,'20852522-2','Benito Martinez');
@@ -263,7 +247,6 @@ INSERT INTO factura VALUES (NULL,5,'2020-09-17 22:21:50');
 INSERT INTO factura VALUES (NULL,1,'2020-09-18 11:12:30');
 INSERT INTO factura VALUES (NULL,1,'2020-09-17 17:40:32');
 INSERT INTO factura VALUES (NULL,3,'2020-09-18 13:33:35');
-
 
 -- Productos
 INSERT INTO producto VALUES (NULL,'Coca-Cola 3lt',2100,1);
