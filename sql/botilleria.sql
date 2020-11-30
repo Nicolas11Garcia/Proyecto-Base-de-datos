@@ -58,9 +58,9 @@ CREATE TABLE productos_inactivos(
     nombre VARCHAR(100),
     precio INT,
     fecha_desactivacion DATETIME,
-
     PRIMARY KEY(id),
-    FOREIGN KEY (id_antiguo_fk) REFERENCES producto(id)
+    FOREIGN KEY (id_antiguo_fk) REFERENCES producto(id),
+    UNIQUE(id_antiguo_fk)
 );
 
 -- Procedimientos Almacenados
