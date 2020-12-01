@@ -47,6 +47,7 @@ public class TotalVendido extends JFrame {
         modeloTabla.addColumn("Cantiad");
         modeloTabla.addColumn("Precio Unitario");
         modeloTabla.addColumn("Fecha");
+        modeloTabla.addColumn("Vendedor");
         modeloTabla.addColumn("Total");
         table1.setModel(modeloTabla);
 
@@ -70,6 +71,7 @@ public class TotalVendido extends JFrame {
                 modeloTabla.addColumn("Cantiad");
                 modeloTabla.addColumn("Precio Unitario");
                 modeloTabla.addColumn("Fecha");
+                modeloTabla.addColumn("Vendedor");
                 modeloTabla.addColumn("Total");
                 table1.setModel(modeloTabla);
 
@@ -88,13 +90,15 @@ public class TotalVendido extends JFrame {
                             String cantiad = String.valueOf(p.getCantidad());
                             String precioUni = String.valueOf(p.getPrecio());
                             String fechaProducto = p.getFecha();
+                            String trabaj = p.getVendedor();
                             String precioTotal = String.valueOf(p.getTotal());
 
                             s[0] = nombre;
                             s[1] = cantiad;
                             s[2] = precioUni;
                             s[3] = fechaProducto;
-                            s[4] = precioTotal;
+                            s[4] = trabaj;
+                            s[5] = precioTotal;
 
                             modeloTabla.addRow(s);
                         }

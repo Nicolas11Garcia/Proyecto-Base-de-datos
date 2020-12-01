@@ -5,13 +5,15 @@ public class Total {
     private int cantidad;
     private int precio;
     private String fecha;
+    private String vendedor;
     private int total;
 
-    public Total(String nombre, int cantidad, int precio, String fecha, int total) {
+    public Total(String nombre, int cantidad, int precio, String fecha, String vendedor, int total) {
         this.nombre = nombre;
         this.cantidad = cantidad;
         this.precio = precio;
         this.fecha = fecha;
+        this.vendedor = vendedor;
         this.total = total;
     }
 
@@ -47,6 +49,14 @@ public class Total {
         this.fecha = fecha;
     }
 
+    public String getVendedor() {
+        return vendedor;
+    }
+
+    public void setVendedor(String vendedor) {
+        this.vendedor = vendedor;
+    }
+
     public int getTotal() {
         return total;
     }
@@ -55,4 +65,5 @@ public class Total {
         this.total = total;
     }
 }
+
 

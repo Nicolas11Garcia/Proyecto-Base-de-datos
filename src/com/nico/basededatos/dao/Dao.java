@@ -264,9 +264,10 @@ public class Dao {
                 int cantidadP = resultSet.getInt(2);
                 int precioU = resultSet.getInt(3);
                 String fecha = resultSet.getString(4);
-                int total = resultSet.getInt(5);
+                String trabajador = resultSet.getString(5);
+                int total = resultSet.getInt(6);
 
-                Total total1 = new Total(nombre,cantidadP,precioU,fecha,total);
+                Total total1 = new Total(nombre,cantidadP,precioU,fecha,trabajador,total);
                 lista.add(total1);
             }
             return lista;

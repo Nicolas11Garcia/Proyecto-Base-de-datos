@@ -34,9 +34,11 @@ CREATE TABLE producto(
 CREATE TABLE factura (
     id INT AUTO_INCREMENT,
     cliente_id_fk INT,
+    trabajador_id_fk INT,
     fecha DATETIME,
 
     PRIMARY KEY (id),
+    FOREIGN KEY (trabajador_id_fk) REFERENCES trabajador(id),
     FOREIGN KEY (cliente_id_fk) REFERENCES cliente(id)
 );
 -- Crear Tabla Detalle
@@ -180,13 +182,14 @@ BEGIN
     WHERE factura.fecha <= _hasta);
 
     IF verificador_existe_fecha_desde >= 1 and verificador_existe_fecha_hasta >= 1 THEN 
-        SELECT producto.nombre,detalle.cantidad,producto.precio,factura.fecha, detalle.precio
+        SELECT producto.nombre,detalle.cantidad, producto.precio,factura.fecha, trabajador.username, detalle.precio
         FROM detalle
         INNER JOIN factura on detalle.factura_id_fk = factura.id
         INNER JOIN producto on producto.id = detalle.producto_id_fk
+        INNER JOIN trabajador ON trabajador.id = factura.trabajador_id_fk
         WHERE factura.fecha >= _desde AND factura.fecha <= _hasta
         UNION
-        SELECT '',0,0,'Total',SUM(detalle.precio)
+        SELECT '',0,0,'','Total',SUM(detalle.precio)
         FROM detalle
         INNER JOIN factura on detalle.factura_id_fk = factura.id
         WHERE factura.fecha >= _desde AND factura.fecha <= _hasta;
@@ -228,6 +231,11 @@ END //
 DELIMITER ;
 
 -- INSERT
+INSERT INTO trabajador VALUES(NULL,'trabajador1',SHA2('123',0));
+INSERT INTO trabajador VALUES(NULL,'trabajador2',SHA2('1234',0));
+INSERT INTO trabajador VALUES(NULL,'trabajador3',SHA2('12345',0));
+
+
 -- CLIENTE
 INSERT INTO cliente VALUES(NULL,'20852522-2','Benito Martinez');
 INSERT INTO cliente VALUES(NULL,'20213321-5','Roberto Dueñas');
@@ -236,17 +244,17 @@ INSERT INTO cliente VALUES(NULL,'19321333-2','Francisco Perez');
 INSERT INTO cliente VALUES(NULL,'09232321-6','Esteban Jimenez');
 
 -- Facturas
-INSERT INTO factura VALUES (NULL,1,'2020-08-15 22:49:59');
-INSERT INTO factura VALUES (NULL,3,'2020-08-15 21:32:30');
-INSERT INTO factura VALUES (NULL,2,'2020-08-15 18:42:50');
-INSERT INTO factura VALUES (NULL,2,'2020-08-02 13:20:20');
-INSERT INTO factura VALUES (NULL,4,'2020-08-21 12:43:15');
+INSERT INTO factura VALUES (NULL,1,1,'2020-08-15 22:49:59');
+INSERT INTO factura VALUES (NULL,3,1,'2020-08-15 21:32:30');
+INSERT INTO factura VALUES (NULL,2,2,'2020-08-15 18:42:50');
+INSERT INTO factura VALUES (NULL,2,3,'2020-08-02 13:20:20');
+INSERT INTO factura VALUES (NULL,4,1,'2020-08-21 12:43:15');
 
-INSERT INTO factura VALUES (NULL,5,'2020-09-19 14:20:39');
-INSERT INTO factura VALUES (NULL,5,'2020-09-17 22:21:50');
-INSERT INTO factura VALUES (NULL,1,'2020-09-18 11:12:30');
-INSERT INTO factura VALUES (NULL,1,'2020-09-17 17:40:32');
-INSERT INTO factura VALUES (NULL,3,'2020-09-18 13:33:35');
+INSERT INTO factura VALUES (NULL,5,1,'2020-09-19 14:20:39');
+INSERT INTO factura VALUES (NULL,5,3,'2020-09-17 22:21:50');
+INSERT INTO factura VALUES (NULL,1,2,'2020-09-18 11:12:30');
+INSERT INTO factura VALUES (NULL,1,3,'2020-09-17 17:40:32');
+INSERT INTO factura VALUES (NULL,3,2,'2020-09-18 13:33:35');
 
 -- Productos
 INSERT INTO producto VALUES (NULL,'Coca-Cola 3lt',2100,1);
@@ -264,7 +272,7 @@ INSERT INTO producto VALUES (NULL,'Cerveza Bundor Troll Oatmeal Stout botella 33
 
 -- Detalle                     Factura, Producto, Cantidad,              precio  
 INSERT INTO detalle VALUES (NULL,     1,      1,        1,          (SELECT precio FROM producto WHERE id = 1) * 1);
-INSERT INTO detalle VALUES (NULL,     1,      10,        3,          (SELECT precio FROM producto WHERE id = 10) * 3);
+INSERT INTO detalle VALUES (NULL,     1,      10,        3,         (SELECT precio FROM producto WHERE id = 10) * 3);
 INSERT INTO detalle VALUES (NULL,     2,      9,        4,          (SELECT precio FROM producto WHERE id = 9) * 4);
 INSERT INTO detalle VALUES (NULL,     3,      2,        1,          (SELECT precio FROM producto WHERE id = 2) * 1);
 INSERT INTO detalle VALUES (NULL,     4,      2,        8,          (SELECT precio FROM producto WHERE id = 2) * 8);
@@ -272,12 +280,7 @@ INSERT INTO detalle VALUES (NULL,     4,      5,        3,          (SELECT prec
 INSERT INTO detalle VALUES (NULL,     5,      5,        2,          (SELECT precio FROM producto WHERE id = 5) * 2);
 INSERT INTO detalle VALUES (NULL,     6,      6,        1,          (SELECT precio FROM producto WHERE id = 6) * 1);
 INSERT INTO detalle VALUES (NULL,     7,      1,        5,          (SELECT precio FROM producto WHERE id = 1) * 5);
-INSERT INTO detalle VALUES (NULL,     8,      10,        8,          (SELECT precio FROM producto WHERE id = 10) * 8);
-INSERT INTO detalle VALUES (NULL,     9,      11,        9,          (SELECT precio FROM producto WHERE id = 11) * 9);
-INSERT INTO detalle VALUES (NULL,     10,      4,        10,          (SELECT precio FROM producto WHERE id = 4) * 10);
-
-
-
-
-
+INSERT INTO detalle VALUES (NULL,     8,      10,        8,         (SELECT precio FROM producto WHERE id = 10) * 8);
+INSERT INTO detalle VALUES (NULL,     9,      11,        9,         (SELECT precio FROM producto WHERE id = 11) * 9);
+INSERT INTO detalle VALUES (NULL,     10,      4,        10,        (SELECT precio FROM producto WHERE id = 4) * 10);
 
