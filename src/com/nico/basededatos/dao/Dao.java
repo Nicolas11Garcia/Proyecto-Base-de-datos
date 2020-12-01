@@ -261,10 +261,12 @@ public class Dao {
 
             while (resultSet.next()) {
                 String nombre = resultSet.getString(1);
-                String fecha = resultSet.getString(2);
-                int total = resultSet.getInt(3);
+                int cantidadP = resultSet.getInt(2);
+                int precioU = resultSet.getInt(3);
+                String fecha = resultSet.getString(4);
+                int total = resultSet.getInt(5);
 
-                Total total1 = new Total(nombre,fecha,total);
+                Total total1 = new Total(nombre,cantidadP,precioU,fecha,total);
                 lista.add(total1);
             }
             return lista;

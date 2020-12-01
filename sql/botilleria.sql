@@ -180,13 +180,13 @@ BEGIN
     WHERE factura.fecha <= _hasta);
 
     IF verificador_existe_fecha_desde >= 1 and verificador_existe_fecha_hasta >= 1 THEN 
-        SELECT producto.nombre,factura.fecha, detalle.precio
+        SELECT producto.nombre,detalle.cantidad,producto.precio,factura.fecha, detalle.precio
         FROM detalle
         INNER JOIN factura on detalle.factura_id_fk = factura.id
         INNER JOIN producto on producto.id = detalle.producto_id_fk
         WHERE factura.fecha >= _desde AND factura.fecha <= _hasta
         UNION
-        SELECT '','Total',SUM(detalle.precio)
+        SELECT '',0,0,'Total',SUM(detalle.precio)
         FROM detalle
         INNER JOIN factura on detalle.factura_id_fk = factura.id
         WHERE factura.fecha >= _desde AND factura.fecha <= _hasta;
@@ -275,6 +275,8 @@ INSERT INTO detalle VALUES (NULL,     7,      1,        5,          (SELECT prec
 INSERT INTO detalle VALUES (NULL,     8,      10,        8,          (SELECT precio FROM producto WHERE id = 10) * 8);
 INSERT INTO detalle VALUES (NULL,     9,      11,        9,          (SELECT precio FROM producto WHERE id = 11) * 9);
 INSERT INTO detalle VALUES (NULL,     10,      4,        10,          (SELECT precio FROM producto WHERE id = 4) * 10);
+
+
 
 
 

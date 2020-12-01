@@ -44,8 +44,10 @@ public class TotalVendido extends JFrame {
         //Crear tabla
         modeloTabla = new DefaultTableModel();
         modeloTabla.addColumn("Nombre");
+        modeloTabla.addColumn("Cantiad");
+        modeloTabla.addColumn("Precio Unitario");
         modeloTabla.addColumn("Fecha");
-        modeloTabla.addColumn("Precio");
+        modeloTabla.addColumn("Total");
         table1.setModel(modeloTabla);
 
         atrasButton.addActionListener(new ActionListener() {
@@ -63,11 +65,13 @@ public class TotalVendido extends JFrame {
         verButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    modeloTabla = new DefaultTableModel();
-                    modeloTabla.addColumn("Nombre");
-                    modeloTabla.addColumn("Fecha");
-                    modeloTabla.addColumn("Precio");
-                    table1.setModel(modeloTabla);
+                modeloTabla = new DefaultTableModel();
+                modeloTabla.addColumn("Nombre");
+                modeloTabla.addColumn("Cantiad");
+                modeloTabla.addColumn("Precio Unitario");
+                modeloTabla.addColumn("Fecha");
+                modeloTabla.addColumn("Total");
+                table1.setModel(modeloTabla);
 
                     String desde = desdeFecha.getText();
                     String hasta = hastaFecha.getText();
@@ -79,14 +83,18 @@ public class TotalVendido extends JFrame {
                         List<Total> lista = dao.totalVendido(fecha);
 
                         for(Total p : lista) {
-                            String[] s = new String[lista.size() + 3];
+                            String[] s = new String[lista.size() + 6];
                             String nombre = p.getNombre();
+                            String cantiad = String.valueOf(p.getCantidad());
+                            String precioUni = String.valueOf(p.getPrecio());
                             String fechaProducto = p.getFecha();
-                            String precio = String.valueOf(p.getTotal());
+                            String precioTotal = String.valueOf(p.getTotal());
 
                             s[0] = nombre;
-                            s[1] = fechaProducto;
-                            s[2] = precio;
+                            s[1] = cantiad;
+                            s[2] = precioUni;
+                            s[3] = fechaProducto;
+                            s[4] = precioTotal;
 
                             modeloTabla.addRow(s);
                         }
