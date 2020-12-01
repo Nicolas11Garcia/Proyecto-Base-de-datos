@@ -44,7 +44,7 @@ public class TotalVendido extends JFrame {
         //Crear tabla
         modeloTabla = new DefaultTableModel();
         modeloTabla.addColumn("Nombre");
-        modeloTabla.addColumn("Cantiad");
+        modeloTabla.addColumn("Cantidad");
         modeloTabla.addColumn("Precio Unitario");
         modeloTabla.addColumn("Fecha");
         modeloTabla.addColumn("Vendedor");
@@ -68,7 +68,7 @@ public class TotalVendido extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 modeloTabla = new DefaultTableModel();
                 modeloTabla.addColumn("Nombre");
-                modeloTabla.addColumn("Cantiad");
+                modeloTabla.addColumn("Cantidad");
                 modeloTabla.addColumn("Precio Unitario");
                 modeloTabla.addColumn("Fecha");
                 modeloTabla.addColumn("Vendedor");
